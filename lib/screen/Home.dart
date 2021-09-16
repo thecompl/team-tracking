@@ -26,43 +26,45 @@ class _HomeState extends State<Home> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+      child: Scaffold(
 
 
-      body: PageView(
-        controller: _pageController,
-        physics: NeverScrollableScrollPhysics(),
-        children: <Widget>[
-          Event(),
-          Teams(),
-          Notifications()
-        ],
+        body: PageView(
+          controller: _pageController,
+          physics: NeverScrollableScrollPhysics(),
+          children: <Widget>[
+            Event(),
+            Teams(),
+            Notifications()
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+
+          selectedItemColor:color.bottomnavigationiconcolor,
+          unselectedItemColor:color.whitecolor,
+          backgroundColor: color.blackcolor,
+
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Events',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.group),
+              label: 'Teams',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              label: 'Notifications',
+            ),
+          ],
+
+          currentIndex: _selectedIndex,
+          onTap:(index) =>  onTabTapped(index),
+        ),
+
       ),
-      bottomNavigationBar: BottomNavigationBar(
-
-        selectedItemColor:color.bottomnavigationiconcolor,
-        unselectedItemColor:color.whitecolor,
-        backgroundColor: color.blackcolor,
-
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Events',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Teams',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifications',
-          ),
-        ],
-
-        currentIndex: _selectedIndex,
-        onTap:(index) =>  onTabTapped(index),
-      ),
-
     );
   }
 }

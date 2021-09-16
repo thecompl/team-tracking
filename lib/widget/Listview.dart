@@ -1,7 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 class DataList {
   DataList(this.title, [this.children = const <DataList>[]]);
-
   final String title;
   final List<DataList> children;
 }
@@ -18,14 +18,7 @@ class _ListviewState extends State<Listview> {
     DataList(
       'Mobiles',
       <DataList>[
-        DataList(
-          'MI',
-          <DataList>[
-            DataList('Redmi Note 9'),
-            DataList('Redmi Note 10'),
-            DataList('Mi 10i 5G'),
-          ],
-        ),
+        DataList('MI',),
         DataList('Samsung'),
         DataList('Apple'),
       ],
@@ -48,62 +41,63 @@ class _ListviewState extends State<Listview> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     var size = MediaQuery.of(context).size;
-    return Container(
-      height: size.height*0.8,
-      child: ListView.builder(
-        itemBuilder: (BuildContext context, int index) =>
-            Card(child: DataPopUp(data[index])),
-        itemCount: data.length,
+    return SingleChildScrollView(
+      child: Container(
+        height: size.height*0.7,
+        child: ListView.builder(
+          itemBuilder: (BuildContext context, int index) =>
+              Card(child: DataPopUp(data[index])),
+          itemCount: data.length,),
+        // child: ListView(
+        //   children: const <Widget>[
+        // Card(
+        // child: ListTile(
+        // leading: FlutterLogo(),
+        // title: Text('One-line with both widgets'),
+        // trailing: Icon(Icons.arrow_forward_ios),
+        // ),),
+        //     Card(
+        //       child: ListTile(
+        //
+        //         leading: FlutterLogo(),
+        //         title: Text('One-line with both widgets'),
+        //         trailing: Icon(Icons.arrow_forward_ios),
+        //       ),),
+        //     Card(
+        //       child: ListTile(
+        //         leading: FlutterLogo(),
+        //         title: Text('One-line with both widgets'),
+        //         trailing: Icon(Icons.arrow_forward_ios),
+        //       ),),
+        //     Card(
+        //       child: ListTile(
+        //         leading: FlutterLogo(),
+        //         title: Text('One-line with both widgets'),
+        //         trailing: Icon(Icons.arrow_forward_ios),
+        //       ),),
+        //     Card(
+        //       child: ListTile(
+        //         leading: FlutterLogo(),
+        //         title: Text('One-line with both widgets'),
+        //         trailing: Icon(Icons.arrow_forward_ios),
+        //       ),),
+        //     Card(
+        //       child: ListTile(
+        //         leading: FlutterLogo(),
+        //         title: Text('One-line with both widgets'),
+        //         trailing: Icon(Icons.arrow_forward_ios),
+        //       ),),
+        //     Card(
+        //       child: ListTile(
+        //         leading: FlutterLogo(),
+        //         title: Text('One-line with both widgets'),
+        //         trailing: Icon(Icons.arrow_forward_ios),
+        //       ),)
+        //   ],
+        // ),
       ),
-      // child: ListView(
-      //   children: const <Widget>[
-      // Card(
-      // child: ListTile(
-      // leading: FlutterLogo(),
-      // title: Text('One-line with both widgets'),
-      // trailing: Icon(Icons.arrow_forward_ios),
-      // ),),
-      //     Card(
-      //       child: ListTile(
-      //
-      //         leading: FlutterLogo(),
-      //         title: Text('One-line with both widgets'),
-      //         trailing: Icon(Icons.arrow_forward_ios),
-      //       ),),
-      //     Card(
-      //       child: ListTile(
-      //         leading: FlutterLogo(),
-      //         title: Text('One-line with both widgets'),
-      //         trailing: Icon(Icons.arrow_forward_ios),
-      //       ),),
-      //     Card(
-      //       child: ListTile(
-      //         leading: FlutterLogo(),
-      //         title: Text('One-line with both widgets'),
-      //         trailing: Icon(Icons.arrow_forward_ios),
-      //       ),),
-      //     Card(
-      //       child: ListTile(
-      //         leading: FlutterLogo(),
-      //         title: Text('One-line with both widgets'),
-      //         trailing: Icon(Icons.arrow_forward_ios),
-      //       ),),
-      //     Card(
-      //       child: ListTile(
-      //         leading: FlutterLogo(),
-      //         title: Text('One-line with both widgets'),
-      //         trailing: Icon(Icons.arrow_forward_ios),
-      //       ),),
-      //     Card(
-      //       child: ListTile(
-      //         leading: FlutterLogo(),
-      //         title: Text('One-line with both widgets'),
-      //         trailing: Icon(Icons.arrow_forward_ios),
-      //       ),)
-      //   ],
-      // ),
     );
 
 
@@ -117,10 +111,21 @@ class DataPopUp extends StatelessWidget {
     if (root.children.isEmpty) return ListTile(title: Text(root.title));
     return ExpansionTile(
       key: PageStorageKey<DataList>(root),
-      title: Text(
-        root.title,
+      title: Row(
+          children:[
+          Container(
+            width:50,
+              height: 50,
+              child: Image(image: AssetImage("assets/images/s30.png"))
+          ),
+          SizedBox(width:20,),
+          Text(
+          root.title,
+        ),
+        ]
       ),
-      children: root.children.map(_buildTiles).toList(),
+      children:
+      root.children.map(_buildTiles).toList(),
     );
   }
 

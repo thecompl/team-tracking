@@ -13,14 +13,14 @@ class _EventState extends State<Event> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
+
           child: Column(
             children: [
               Header(),
               Listview()
             ],
           ),
-        ),
+
       ),
     );
   }

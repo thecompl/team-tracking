@@ -49,13 +49,20 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/Football.png
-    - assets/images/Socar.png
+    - assets/images/s29.png
+    - assets/images/s28.png
     - assets/images/s31.png
     - assets/images/s32.png
     - assets/images/s33.png
     - assets/images/s30.png
-    -
+    - assets/images/s39.png
+    - assets/images/sd28.png
+    - assets/images/sd29.png
+    - assets/images/sd30.png
+    - assets/images/sd31.png
+    - assets/images/sd32.png
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

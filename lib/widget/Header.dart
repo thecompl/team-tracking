@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:team_tracking/config/String.dart';
 import 'package:team_tracking/config/color.dart';
 import 'package:intl/intl.dart'; // for date format
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:team_tracking/widget/DateScroll.dart';
+import 'package:team_tracking/widget/ImageList.dart';
 import 'package:team_tracking/widget/Listview.dart'; // for other locales
 class Header extends StatefulWidget {
   const Header({Key? key}) : super(key: key);
@@ -15,7 +18,8 @@ class Header extends StatefulWidget {
 class _HeaderState extends State<Header> {
   String finalDate = '';
    var list = 10;
-  void initState(){
+
+   void initState(){
     getCurrentDate();
     super.initState();
   }
@@ -24,88 +28,30 @@ class _HeaderState extends State<Header> {
     var size = MediaQuery.of(context).size;
     return Container(
       width: size.width*1,
-      height: size.height*0.2,
+      height: size.height*0.158,
       color: color.blackcolor,
       child:Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-          Padding(
-            padding: const EdgeInsets.all(25),
-            child: Text("$finalDate",style: TextStyle(letterSpacing:letterspacing,fontSize: 25, color:color.yellowcolor,fontFamily: 'Gilroy',fontWeight: FontWeight.w600),),
-          ),
-
-          Container(
-            height: 50.0,
-            child: new ListView(
-              scrollDirection: Axis.horizontal,
-              children: new List.generate(31, (int index) {
-                return Padding(
-                  padding: const EdgeInsets.only(left:20),
-                  child: Container(
-                      width: 50.0,
-                      height: 50.0,
-                      child: new Text("$index",style: TextStyle(color:color.whitecolor,fontSize:18),),
-                    ),
-                );
-
-              }),
-            ),
-          ),
+          monthyear(),
+          DateScroll().Monthdays(),
           Divider(color:color.whitecolor,thickness:2,),
-           Container(
-            height: 50.0,
-            child: new ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-
-                  Container(
-                        child: Image(
-                          image:AssetImage("assets/images/Football.png")
-                        )
-                  ),
-                  SizedBox(width:10),
-                Container(
-                    child: Image(
-                        image:AssetImage("assets/images/s30.png")
-                    )
-                ),
-                SizedBox(width:10),
-                Container(
-                    child: Image(
-                        image:AssetImage("assets/images/s31.png")
-                    )
-                ),
-                SizedBox(width:10),
-                Container(
-                    child: Image(
-                        image:AssetImage("assets/images/s33.png")
-                    )
-                ),
-                SizedBox(width:10),
-                Container(
-                    child: Image(
-                        image:AssetImage("assets/images/s32.png")
-                    )
-                ),
-                SizedBox(width:10),
-                  Container(
-                    child: Image(
-                        image:AssetImage("assets/images/Socar.png")
-                    )
-                )
-
-
-              ]
-            ),
-          ),
-
-
+          ImageList()
         ],
       )
     );
   }
+  Widget monthyear(){
+    return
+      Padding(
+        padding: const EdgeInsets.all(10),
+        child: Text("$finalDate",style: TextStyle(letterSpacing:letterspacing,fontSize: 14, color:color.yellowcolor,fontFamily: 'Gilroy',fontWeight: FontWeight.w600),),
+      );
+  }
+
+
+
   getCurrentDate(){
 
     var date = new DateTime.now();
@@ -115,4 +61,7 @@ class _HeaderState extends State<Header> {
      print(finalDate);
    });
   }
+}
+class headerimage{
+
 }

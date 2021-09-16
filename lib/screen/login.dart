@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:team_tracking/config/String.dart';
 import 'package:team_tracking/config/color.dart';
-import 'package:team_tracking/screen/Events.dart';
+import 'package:team_tracking/screen/Home.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -189,10 +189,10 @@ class _LoginState extends State<Login> {
       height:50,
 
       child: ElevatedButton(onPressed: () {
-        print('pressed0');
+        print('pressed');
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Events()),
+          MaterialPageRoute(builder: (context) => Home()),
         );
       },
         child: Text('Login',style:TextStyle(letterSpacing: 0.7,fontSize:18,fontWeight: FontWeight.bold,color: Colors.white),),
