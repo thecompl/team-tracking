@@ -3,13 +3,13 @@ import 'package:team_tracking/screen/Event.dart';
 import 'package:team_tracking/screen/Notification.dart';
 import 'package:team_tracking/config/color.dart';
 import 'Teams.dart';
-class Events extends StatefulWidget {
-  const Events({Key? key}) : super(key: key);
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
-  _EventsState createState() => _EventsState();
+  _HomeState createState() => _HomeState();
 }
-class _EventsState extends State<Events> {
+class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   PageController _pageController = PageController();
