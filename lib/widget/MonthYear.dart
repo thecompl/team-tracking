@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:team_tracking/config/String.dart';
@@ -13,6 +12,7 @@ class MonthYear extends StatefulWidget {
 
 class _MonthYearState extends State<MonthYear> {
   String finalDate = '';
+  String finalmonth = '';
   var list = 10;
   void initState(){
     super.initState();
@@ -26,7 +26,7 @@ class _MonthYearState extends State<MonthYear> {
   monthyear(){
     return
       Padding(
-        padding: const EdgeInsets.all(25),
+        padding: const EdgeInsets.all(10),
         child: Text("$finalDate",style: TextStyle(letterSpacing:letterspacing,fontSize: 14, color:color.yellowcolor,fontFamily: 'Gilroy',fontWeight: FontWeight.w600),),
       );
   }
@@ -34,8 +34,10 @@ class _MonthYearState extends State<MonthYear> {
 
     var date = new DateTime.now();
     var formattedDate = DateFormat.yMMMM().format(date);
-
+    var formatemonth = DateFormat.MMMM().format(date);
     finalDate = formattedDate.toString() ;
+    finalmonth=formatemonth.toString();
+    print(finalmonth);
     print(finalDate);
 
   }

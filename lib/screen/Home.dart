@@ -28,8 +28,6 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-
-
         body: PageView(
           controller: _pageController,
           physics: NeverScrollableScrollPhysics(),

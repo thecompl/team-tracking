@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 class ImageList extends StatefulWidget {
   const ImageList({Key? key}) : super(key: key);
@@ -6,7 +5,6 @@ class ImageList extends StatefulWidget {
   @override
   _ImageListState createState() => _ImageListState();
 }
-
 class _ImageListState extends State<ImageList> {
   var data =[
         {
@@ -40,58 +38,54 @@ class _ImageListState extends State<ImageList> {
       "status" : "0"
     },
     {
-      "id": "4",
+      "id": "5",
       "activeimage": "assets/images/s33.png",
       "unactiveimage": "assets/images/s39.png",
       "status" : "0"
     },
 
-
-
-
-      ];
+  ];
 
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return  Container(
-      height:size.height*0.056,
+    return
+      Container(
 
-      child: new ListView.builder(
-        padding: EdgeInsets.all(0.1),
-          scrollDirection: Axis.horizontal,
-          itemCount: data.length,
-          itemBuilder: (BuildContext ctxt, int index) {
-            return  gamecategory(data[index],index);
-          }
-      ),
-    );
+        height:size.height*0.056,
+        child: new ListView.builder(
+          padding: EdgeInsets.all(0.1),
+            scrollDirection: Axis.horizontal,
+            itemCount: data.length,
+            itemBuilder: (BuildContext ctxt, int index) {
+              return  Padding(
+                padding: const EdgeInsets.only(left:5),
+                child: gamecategory(data[index],index),
+              );
+            }
+        ),
+      );
+
   }
 
   Widget gamecategory(data,index){
     print("gamec="+index.toString());
-    var imagechange=data['activeimage'].toString();
-    return
-      GestureDetector(
+        return GestureDetector(
         onTap: (){
           setState(() {
             var gcvalue=this.data[index]['status'];
             if(gcvalue=="1"){
-
-                this.data[index]['status']='0';
-
+              this.data[index]['status']='0';
             }
            else{
               for(int i=0;i<this.data.length;i++){
                 this.data[i]['status']='0';
               }
               this.data[index]['status']='1';
-
-            }
+           }
           });
-
-        },
+          },
           child: Image(
               image:
                   data['status']=='0'?

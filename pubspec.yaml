@@ -26,11 +26,16 @@ dependencies:
   animated_splash_screen:
   shared_preferences:
   intl:
+  date_format:
+  quiver:
+  indexed_list_view:
+
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +66,19 @@ flutter:
     - assets/images/sd30.png
     - assets/images/sd31.png
     - assets/images/sd32.png
+    - assets/images/team1.png
+    - assets/images/teamicon1.png
+    - assets/images/teamicon2.png
+    - assets/images/team2.png
+    - assets/images/team3.png
+    - assets/images/team4.png
+    - assets/images/teamlogo.png
+    - assets/images/flag.png
+    - assets/images/starimage.png
+    - assets/images/color_starpic.png
+    - assets/images/Subtract.png
+    - assets/images/deleteall.png
+    - assets/images/footballicon.png
 
 
 

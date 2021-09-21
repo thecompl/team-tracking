@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+
 import 'package:team_tracking/screen/SplashScreen.dart';
 
 void main(){
@@ -12,6 +14,9 @@ class Myapp extends StatefulWidget {
 }
 
 class _MyappState extends State<Myapp> {
+  void initState(){
+
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

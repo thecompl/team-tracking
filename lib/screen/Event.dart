@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:team_tracking/screen/Home.dart';
 import 'package:team_tracking/widget/Header.dart';
 import 'package:team_tracking/widget/Listview.dart';
 class Event extends StatefulWidget {
@@ -13,14 +14,12 @@ class _EventState extends State<Event> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-
-          child: Column(
+        child: Column(
             children: [
               Header(),
               Listview()
             ],
           ),
-
       ),
     );
   }
