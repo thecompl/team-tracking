@@ -12,5 +12,6 @@ class color{
   static final teambackcolor =  Color(0xFF575757);
   static final eventbellcolor =  Color(0xFF5D5D5D);
   static final tmpcardcolor =  Color(0xFFF5F5F5);
+  static final scorecolor =  Color(0xFF129B20);
 
 }

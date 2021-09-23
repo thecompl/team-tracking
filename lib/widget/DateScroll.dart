@@ -1,9 +1,9 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:quiver/collection.dart';
 import 'package:quiver/time.dart';
 import 'package:team_tracking/config/color.dart';
+import 'package:team_tracking/widget/Textfield.dart';
 
 class DateScroll extends StatefulWidget {
   const DateScroll({Key? key}) : super(key: key);
@@ -13,114 +13,118 @@ class DateScroll extends StatefulWidget {
 }
 
 class _DateScrollState extends State<DateScroll> {
+  void initState(){
+
+  }
   @override
   Widget build(BuildContext context) {
     return Monthdays();
   }
 }
+
 Monthdays() {
-  final _height = 20.0;
+  int itemsize = 130;
+
+  var formatemonth = DateFormat.M().format(DateTime.now());
+  var formateyear = DateFormat.y().format(DateTime.now());
+  var current_d = DateFormat.d().format(DateTime.now());
+  var dayinmonth = daysInMonth(int.parse(formateyear.toString()), int.parse(formatemonth.toString()));
   final _controller = ScrollController();
-  _animateToIndex(i) => _controller.animateTo(_height * i, duration: Duration(seconds: 2), curve: Curves.linear);
-  return Row(children: [
-    GestureDetector(
-      onTap:(){ _animateToIndex(5);},
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8),
-        child: Icon(
-          Icons.arrow_back_ios,
-          size: 15,
-          color: color.whitecolor,
-        ),
-      ),
-    ),
 
- Container(
-    margin: EdgeInsets.only(left:10),
-        height: 16,
-        width: 300,
-        child: ListView.builder(
-            controller: _controller,
-            itemCount: 5,
-            itemBuilder: (BuildContext context, int index) {
-            return Listcalender();
-             // List.generate(dayinmonth + 1, (int index) {
-             //    return Padding(
-             //      padding: const EdgeInsets.only(left: 10),
-             //      child: Container(
-             //        width: 30.0,
-             //        height: 50.0,
-             //        child: new Text(
-             //          "$index",
-             //          style: TextStyle(color: color.whitecolor, fontSize: 12),
-             //        ),
-             //      ),
-             //    );
-             //  });
-            }),
-          // child: new ListView(
-        //   scrollDirection: Axis.horizontal,
-        //   children: new List.generate(dayinmonth+1,(int index) {
-        //     return Padding(
-        //       padding: const EdgeInsets.only(left:10),
-        //       child: Container(
-        //         width: 30.0,
-        //         height: 50.0,
-        //         child: new Text("$index",style: TextStyle(color:color.whitecolor,fontSize:12),),
-        //       ),
-        //     );
-        //
-        //   }),
-        // ),
-      ),
 
-    GestureDetector(
-      onTap: (){_animateToIndex(5);},
-      child: Padding(
-        padding: const EdgeInsets.only(left: 9),
-        child: Icon(
-          Icons.arrow_forward_ios,
-          size: 15,
-          color: color.whitecolor,
-        ),
-      ),
-    ),
-  ]);
-
-}
-
-Listcalender(){
-  String finalmonth = '';
-  String finalyear = '';
-  var date = new DateTime.now();
-  var formatemonth = DateFormat.M().format(date);
-  var formateyear = DateFormat.y().format(date);
-  finalmonth = formatemonth.toString();
-  finalyear = formateyear.toString();
-  var month = int.parse(finalmonth);
-  var year = int.parse(finalyear);
-  print(finalmonth);
-  print(finalyear);
-  var dayinmonth = daysInMonth(year, month);
-
+  _moveright() {
+    _controller.animateTo(_controller.offset - itemsize,
+        curve: Curves.linear, duration: Duration(milliseconds: 500));
+  }
+  _moveleft() {
+    _controller.animateTo(_controller.offset + itemsize,
+        curve: Curves.linear, duration: Duration(milliseconds: 500));
+  }
 
   return Container(
-    height: 100,
-    child: ListView(
-      scrollDirection: Axis.horizontal,
-      children: new List.generate(dayinmonth+1,(int index ) {
-        return Padding(
-          padding: const EdgeInsets.only(left:10),
-          child: Container(
-            width: 30.0,
-            height: 50.0,
-            child: new Text("$index",style: TextStyle(color:color.whitecolor,fontSize:12),),
+    padding: EdgeInsets.only(bottom:4),
+    child: Row(children: [
+      GestureDetector(
+        onTap: () {
+          _moveright();
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(left:16),
+          child: Icon(
+            Icons.arrow_back_ios,
+            size: 19,
+            color: color.whitecolor,
           ),
-        );
+        ),
+      ),
 
-      }),
-    ),
+      Container(
+        margin: EdgeInsets.only(left: 10),
+        height: 33,
+        width: 280,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            controller: _controller,
+            itemCount: dayinmonth,
+            itemBuilder: (BuildContext context, int index) {
+              var date = index + 1;
+             int cdate =int.parse(current_d);
+
+              var focus = cdate == date?true:false;
+              print(focus);
+
+              return  Padding(
+                padding: const EdgeInsets.only(left:9),
+                child: Container(
+
+                  width: 30.0,
+                  height: 50.0,
+                  child: focus == true ?
+                  Stack(
+                    children: [
+
+                      Container(
+                        color: color.yellowcolor,
+                        height:33,
+                        width:33,
+                      ),
+                      Center(
+                        child: Container(
+                            child:Textfield().text("$date", 14, FontWeight.w500, color.blackcolor,20)
+
+                        ),
+                      ),
+                    ],
+                  ):
+                  Stack(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(6),
+                        child: Textfield().text("$date",12,FontWeight.w600, color.whitecolor,20)
+
+                      ),
+                    ],
+                  )
+                ),
+              );
+
+            }),
+      ),
+      GestureDetector(
+        onTap: () {
+          _moveleft();
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(left:10),
+          child: Icon(
+            Icons.arrow_forward_ios,
+            size: 19,
+            color: color.whitecolor,
+          ),
+        ),
+      ),
+    ]),
   );
-
 }
+
 

@@ -29,7 +29,7 @@ class _HeaderState extends State<Header> {
         .size;
     return Container(
         width: size.width * 1,
-        height: size.height * 0.170,
+        height: size.height * 0.200,
         color: color.blackcolor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -37,7 +37,10 @@ class _HeaderState extends State<Header> {
           children: [
             MonthYear(),
             DateScroll(),
-            Divider(color: color.whitecolor, thickness: 2,),
+            Padding(
+              padding: const EdgeInsets.only(left:10,right:10),
+              child: Divider(color: color.whitecolor, thickness: 2,),
+            ),
             ImageList()
           ],
         )

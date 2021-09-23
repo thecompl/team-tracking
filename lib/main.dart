@@ -1,9 +1,13 @@
 
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
 import 'package:team_tracking/screen/SplashScreen.dart';
-
+import 'package:team_tracking/widget/DateScroll.dart';
 void main(){
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
   runApp(Myapp());
 }
 class Myapp extends StatefulWidget {
@@ -20,7 +24,7 @@ class _MyappState extends State<Myapp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SplashScreen(),
+      home:SplashScreen(),
     );
   }
 }
