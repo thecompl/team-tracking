@@ -2,6 +2,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:team_tracking/config/String.dart';
 import 'package:team_tracking/config/color.dart';
+import 'package:team_tracking/screen/Event.dart';
 import 'package:team_tracking/screen/Home.dart';
 import 'package:team_tracking/screen/login.dart';
 class SplashScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
         splash:Center(child:
         Text('Team Tracking',style: TextStyle(color:color.whitecolor,fontFamily:'Gilroy',fontSize: 20,fontWeight: FontWeight.bold,letterSpacing: letterspacing))
         ),
-        nextScreen:Login(),
+        nextScreen:Home(),
         splashTransition:SplashTransition.scaleTransition,
       ),
     );

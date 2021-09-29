@@ -18,11 +18,12 @@ class _DateScrollState extends State<DateScroll> {
   }
   @override
   Widget build(BuildContext context) {
-    return Monthdays();
+    return Monthdays(context);
   }
 }
 
-Monthdays() {
+Monthdays(context) {
+  var size =MediaQuery.of(context).size;
   int itemsize = 130;
 
   var formatemonth = DateFormat.M().format(DateTime.now());
@@ -49,7 +50,7 @@ Monthdays() {
           _moveright();
         },
         child: Padding(
-          padding: const EdgeInsets.only(left:16),
+          padding: const EdgeInsets.only(left:16,bottom:8),
           child: Icon(
             Icons.arrow_back_ios,
             size: 19,
@@ -59,9 +60,9 @@ Monthdays() {
       ),
 
       Container(
-        margin: EdgeInsets.only(left: 10),
-        height: 33,
-        width: 280,
+        margin: EdgeInsets.only(left:10),
+        height: size.height*0.5,
+        width: size.width,
         child: ListView.builder(
             scrollDirection: Axis.horizontal,
             controller: _controller,
@@ -115,7 +116,7 @@ Monthdays() {
           _moveleft();
         },
         child: Padding(
-          padding: const EdgeInsets.only(left:10),
+          padding: const EdgeInsets.only(bottom:8),
           child: Icon(
             Icons.arrow_forward_ios,
             size: 19,

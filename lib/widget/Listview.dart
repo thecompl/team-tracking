@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:team_tracking/Api/Api.dart';
 import 'package:team_tracking/Api/Url.dart';
 import 'package:team_tracking/config/color.dart';
@@ -12,36 +13,47 @@ import 'package:team_tracking/screen/Match.dart';
 import 'package:team_tracking/screen/Teamevent.dart';
 import 'package:team_tracking/widget/Popup.dart';
 import 'package:team_tracking/widget/Textfield.dart';
+import 'package:team_tracking/widget/bloc.dart';
+import 'package:team_tracking/widget/loading.dart';
 
-class DataList {
-  DataList(this.title, [this.children = const <DataList>[]]);
-  final String title;
-  final List<DataList> children;
-}
+
+
 
 class Listview extends StatefulWidget {
-  const Listview({Key? key}) : super(key: key);
 
+final String gamename;
+final int team;
+  const Listview({Key? key, required this.gamename, required this.team}) : super(key: key);
   @override
   _ListviewState createState() => _ListviewState();
+
 }
 
 class _ListviewState extends State<Listview> {
+  var teamname;
   List data = [];
-  void initState() {
+  String Gamename='';
+  var formatemonth = DateFormat.M().format(DateTime.now());
+  var formateyear = DateFormat.y().format(DateTime.now());
+  var current_d = DateFormat.d().format(DateTime.now());
 
+  void initState() {
     super.initState();
-    apicall();
+    apicall(widget.gamename,widget.team);
   }
 
-  apicall() async {
+  apicall(gamename, team_id) async {
+    print("https://spoyer.ru/api/get.php?login=ayna&token=12784-OhJLY5mb3BSOx0O&task=predatapage&sport=$gamename&team=$team_id&p=1");
     await Api()
         .apicall(
-            "https://spoyer.ru/api/get.php?login=ayna&token=12784-OhJLY5mb3BSOx0O&task=livedata&sport=soccer")
+            "https://spoyer.ru/api/get.php?login=ayna&token=12784-OhJLY5mb3BSOx0O&task=predatapage&sport=$gamename&team=$team_id&p=1")
         .then((value) {
-      if (value['games_live'].length > 0) {
+
+      if (value['games_pre'].length > 0) {
+
         setState(() {
-          data = value['games_live'];
+          data = value['games_pre'];
+
         });
       } else {
         setState(() {
@@ -58,18 +70,19 @@ class _ListviewState extends State<Listview> {
       child: Container(
         height: size.height * 0.675,
         child: ListView.builder(
-            itemCount: data.length,
-            itemBuilder: (BuildContext context, int i) {
+            itemCount: data.length > 0 ? data.length:5,
+            itemBuilder: (BuildContext context, int index) {
+              if(data.isEmpty) return Loadingcard();
               return new ExpansionTile(
-                  title: leagetitle(data, i, context),
-                  children: _buildExpandableContent(i));
+                  title: leagetitle(data, index, context),
+                  children: _buildExpandableContent(index));
             }),
       ),
     );
   }
 
   _buildExpandableContent(index) {
-    print("imageteam=="+data[index]['home']['id'].toString());
+    print("imageteam=="+url.teamimgurl+"soccer/"+data[index]['home']['id']+".png");
     var size = MediaQuery.of(context).size;
     List<Widget> columnContent = [];
     columnContent.add(Container(
@@ -77,34 +90,35 @@ class _ListviewState extends State<Listview> {
         width:size.width*360,
         child: GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Match()),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => Match()),
+            // );
           },
           child: Card(
               color: color.tmpcardcolor,
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(left: 23,top: 23,right: 23),
+                    padding: EdgeInsets.only(left: 23,top: 20,right: 23),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Textfield().text("23.08.2021", 11,
+                        Textfield().text(current_d+"."+formatemonth+"."+formateyear, 11,
                                 FontWeight.w500, color.datecolor,60),
                         Textfield().text(data[index]['score'], 17,
                                 FontWeight.w600, color.scorecolor,40),
                         Container(
                             width: 27,
                             height: 27,
+
                             child: GestureDetector(
                               onTap: () {
                                 showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
-                                      return Popup();
+                                      return Popup(time:data[index]['timer'], leuge_name:data[index]['league']['name'], game_name: Gamename,);
                                     });
                               },
                               child: Card(
@@ -133,24 +147,24 @@ class _ListviewState extends State<Listview> {
                           padding: const EdgeInsets.only(top: 7, left: 10),
                           child:CachedNetworkImage(
                             imageUrl:url.teamimgurl+"soccer/"+data[index]['home']['id']+".png",
-                            width:50,
-                            height: 50,
-                            placeholder: (context, url) => Text("No image"),
-                            errorWidget: (context, url, error) => Icon(Icons.error),
+                            width:40,
+                            height: 40,
+                            errorWidget:(context, url, error) => Image.asset("assets/images/nullimg.png") ,
                           ),
 
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top:15,left:20),
-                          child:Textfield().text(data[index]['timer'].toString(), 16, FontWeight.w600,color.blackcolor,40)
+                          child:Textfield().text(data[index]['timer'].toString(), 16, FontWeight.w600,color.blackcolor,50)
                         ),
                         Padding(
                             padding: const EdgeInsets.only(top: 7, right: 10),
                             child: CachedNetworkImage(
-                              width: 50,
-                              height: 50,
-                             imageUrl:url.teamimgurl+"soccer/"+data[index]['away']['id']+".png",)
-                        )
+                              imageUrl:url.teamimgurl+"soccer/"+data[index]['away']['id']+".png",
+                              width: 40,
+                              height: 40,
+                              errorWidget:(context, url, error) => Image.asset("assets/images/nullimg.png") ,
+                        )),
                       ],
                     ),
                   ),
@@ -159,15 +173,15 @@ class _ListviewState extends State<Listview> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Textfield().text(data[index]['home']['name'].toString(), 14, FontWeight.w500,color.teambackcolor,120),
-                          Textfield().text(data[index]['away']['name'].toString(), 14, FontWeight.w500,color.teambackcolor,120),
+                          Textfield().text(data[index]['home']['name'].toString(), 14, FontWeight.w500,color.teambackcolor,130),
+                          Textfield().text(data[index]['away']['name'].toString(), 14, FontWeight.w500,color.teambackcolor,130),
                         ],
                       ),
                     ),
                   ],
                 )
 
-              // ListTile(title: Text(root.title))),
+            
               ),
         )));
     return columnContent;
@@ -175,18 +189,12 @@ class _ListviewState extends State<Listview> {
 }
 
 leagetitle(data, index, context) {
+  var size = MediaQuery.of(context).size;
 
   return Container(
     child: Row(
       children: [
-        SvgPicture.network(
-          url.imgurl+data[index]['league']['cc']+".svg",
-          width: 37,
-          height:37,
-          semanticsLabel: 'A shark?!',
-          // placeholderBuilder: (BuildContext context) => Container(
-          //     child: const CircularProgressIndicator()),
-        ),
+
         SizedBox(
           width: 5,
         ),

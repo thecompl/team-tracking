@@ -32,6 +32,11 @@ dependencies:
   dio:
   cached_network_image:
   flutter_svg:
+  skeleton_text:
+  sqflite: any
+  path_provider: any
+  flutter_local_notifications:
+  rxdart:
 
 
 
@@ -69,7 +74,7 @@ flutter:
     - assets/images/sd30.png
     - assets/images/sd31.png
     - assets/images/sd32.png
-    - assets/images/team1.png
+    - assets/images/app_icon.png
     - assets/images/teamicon1.png
     - assets/images/teamicon2.png
     - assets/images/team2.png
@@ -82,7 +87,14 @@ flutter:
     - assets/images/Subtract.png
     - assets/images/deleteall.png
     - assets/images/footballicon.png
+    - assets/images/Basketballicon.png
+    - assets/images/baseballicon.png
+    - assets/images/Volleyballicon.png
+    - assets/images/hockeyicon.png
     - assets/Country.json
+    - assets/images/nullimg.png
+    - assets/images/star_24px.png
+    - assets/images/app_icon.png
 
 
 
